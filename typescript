@@ -1,0 +1,212 @@
+Script started on 2026-02-12 23:45:22+00:00 [TERM="xterm-256color" TTY="/dev/pts/20" COLUMNS="63" LINES="16"]
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG[00m$ ll[K[Kcd scripts/
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ ./stop.sh 
+[?2004l🛑 Stopping and removing container: ai-vision-rag-app
+ai-vision-rag-app
+ai-vision-rag-app
+✅ Container stopped and removed.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ ./stop.sh 
+[?2004lℹ️ Container ai-vision-rag-app is not running.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ ./stop.sh [K[K[K[K[K[Ka[K[K[K[K[K./deploy.sh 
+[?2004l🚀 Starting CI/CD Deployment for ai-vision-rag...
+🛠️ Building Docker image: ai-vision-rag
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  529.7kBSending build context to Docker daemon   1.54MB
+Step 1/8 : FROM python:3.10-slim
+ ---> 988b1bc80158
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> f4e31b7ea5cc
+Step 3/8 : RUN apt-get update && apt-get install -y     build-essential     libopenblas-dev     libomp-dev     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 7cd2250ecd55
+Step 4/8 : COPY requirements.txt .
+ ---> Using cache
+ ---> 11702c08f05c
+Step 5/8 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Using cache
+ ---> d82401a5423a
+Step 6/8 : COPY . .
+ ---> 9b35ef7e6a79
+Step 7/8 : EXPOSE 5000
+ ---> Running in a64dfa4a6a79
+ ---> Removed intermediate container a64dfa4a6a79
+ ---> a71f0769356a
+Step 8/8 : CMD ["python", "app.py"]
+ ---> Running in abdf12b560d8
+ ---> Removed intermediate container abdf12b560d8
+ ---> 9d264e7a8a27
+Successfully built 9d264e7a8a27
+Successfully tagged ai-vision-rag:latest
+🏃 Starting new container: ai-vision-rag-app on port 5000
+680ffa0bb7ba5c7f9c2c44ea606ea07808691b50ee476cd292a6236c98b4eb71
+✨ Deployment successful! Access the app at http://localhost:5000
+📊 Run 'bash scripts/log_monitor.sh' to see application logs.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ cd [K[K[Kwhich del[Kploy.sh 
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ realpath deploy.sh 
+[?2004l/mnt/nvme0n1p1/home/bt/aaa2025/startup/app_idea/android_ai_vision/rag/scripts/deploy.sh
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG/scripts[00m$ cd ..
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai/GeoRAG[00m$ cd ,,[K[K..
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ nna[K[K[Knano t[Kdeply[Koy.sh
+[?2004l[?2004h[?1049h[22;0;0t[1;16r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[14;26H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 7.2               deploy.sh                         [1;62H(B[m[15d(B[0;7m^G(B[m Help     (B[0;7m^O(B[m Write Out(B[0;7m^W(B[m Where Is (B[0;7m^K(B[m Cut[49G(B[0;7m^T(B[m Execute[16d(B[0;7m^X(B[m Exit     (B[0;7m^R(B[m Read File(B[0;7m^\(B[m Replace  (B[0;7m^U(B[m Paste    (B[0;7m^J(B[m Justify[2d[?12l[?25h[?25l[1;40H(B[0;7m*[62G(B[m[?12l[?25h[2d[36m#[39m(B[m[?25l[?12l[?25h[36m'[39m(B[m[?25l[?12l[?25h [?25l[?12l[?25h[36m/[39m(B[m[?25l[?12l[?25h[36mb[39m(B[m[?25l[?12l[?25h[36mi[39m(B[m[?25l[?12l[?25h[36mn[39m(B[m[?25l[?12l[?25h[36m/[39m(B[m[?25l[?12l[?25h[36mn[39m(B[m[?25l[?12l[?25h[36ma[39m(B[m[?25l[?12l[?25h[36ms[39m(B[m[?25l[?12l[?25h[36mh[39m(B[m[?25l[?12l[?25h [?25l[?12l[?25h [?25l[?12l[?25h [?25l[?12l[?25h[36mb[39m(B[m[?25l[?12l[?25h [?25l[?12l[?25h [?25l[?12l[?25h[36mb[39m(B[m[?25l[14d[K[?12l[?25h[2;8H[36ma[39m(B[m[?25l[?12l[?25h[36ms[39m(B[m[?25l[?12l[?25h[36mh[39m(B[m[?25l[3d[?12l[?25h[?25l(B[0;7m<(B[mai_vision/rag[?12l[?25h[?25l[?12l[?25h/mnt/nvme0n1p1/home/bt/aaa2025/startup/app_idea/android_ai_vis(B[0;7m>[3;1H(B[m[?25l[?12l[?25h[2;11H[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[3d[?25l[?12l[?25h(B[0;7m<(B[mai_vision/rag[K[?25l[14d(B[0;7mSave modified buffer?                                          [15;1H Y(B[m Yes[K[16d(B[0;7m N(B[m No           (B[0;7m^C(B[m Cancel[K[14;23H[?12l[?25h[?25l[J[16d[?12l[?25h[16;1H[?1049l[23;0;0t[?1l>[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ ll -tr
+[?2004ltotal 52
+drwxrwxr-x 11 bt bt 4096 Jan 21 20:08 [0m[01;34mstock[0m
+drwxrwxr-x  5 bt bt 4096 Jan 23 22:16 [01;34mopenspec[0m
+drwxrwxr-x  3 bt bt 4096 Jan 24 12:54 [01;34msnapshop.ok[0m
+drwxrwxr-x 19 bt bt 4096 Jan 24 19:31 [01;34msnapshop[0m
+drwxrwxr-x  3 bt bt 4096 Jan 31 15:59 [01;34mansible[0m
+drwxrwxr-x  4 bt bt 4096 Feb  4 17:56 [01;34mstock1[0m
+drwxrwxr-x  3 bt bt 4096 Feb  4 20:20 [01;34mmulti-agent[0m
+drwxrwxr-x  4 bt bt 4096 Feb  4 23:43 [01;34mcoin[0m
+drwxrwxr-x 17 bt bt 4096 Feb  5 10:34 [01;34m..[0m
+drwxrwxr-x  7 bt bt 4096 Feb  8 23:52 [01;34mpdf_pptx[0m
+lrwxrwxrwx  1 bt bt  133 Feb 12 22:55 [01;36msql_web_app[0m -> [01;34m'/mnt/nvme0n1p1/home/bt/aaa2025/cv/uk_jobs/nhs_Research & Development Specialist Data Analyst_23Jan2026/technical_practice/sql_web_app'[0m[K
+lrwxrwxrwx  1 bt bt   69 Feb 12 23:45 [01;36mGeoRAG[0m -> [01;34m/mnt/nvme0n1p1/home/bt/aaa2025/startup/app_idea/android_ai_vision/rag[0m[K
+drwxrwxr-x 11 bt bt 4096 Feb 12 23:46 [01;34m.[0m
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ source ~/.,[Kbashrc
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_
+docker_deploy  docker_stop    
+[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_deploy [K[K[K[K[K[K[Kstop 
+[?2004l🛑 Stopping and removing container: ai-vision-rag-app
+ai-vision-rag-app
+ai-vision-rag-app
+✅ Container stopped and removed.
+🛑 Stopping and removing container: sql-dashboard-app
+sql-dashboard-app
+sql-dashboard-app
+✅ Container stopped and removed.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_stop [K[K[Kart
+[?2004ldocker_start: command not found
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_start[K[K[K[K[K[K[K[K[K[K[K[Knano @[K~/.bashrc
+[?2004l[?2004h[?1049h[22;0;0t[1;16r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[14;25H(B[0;7m[ Reading... ](B[m[14;24H(B[0;7m[ Read 39 lines ](B[m[H(B[0;7m  GNU nano 7.2     /mnt/nvme0n1p1/home/bt/.bashrc              [1;62H(B[m[15d(B[0;7m^G(B[m Help     (B[0;7m^O(B[m Write Out(B[0;7m^W(B[m Where Is (B[0;7m^K(B[m Cut[49G(B[0;7m^T(B[m Execute[16d(B[0;7m^X(B[m Exit     (B[0;7m^R(B[m Read File(B[0;7m^\(B[m Replace  (B[0;7m^U(B[m Paste    (B[0;7m^J(B[m Justify[2d[36m# enable color support of ls and also add handy aliases[3d[32mif[39m(B[m [32m[(B[0;1m[35m -x[39m(B[m /usr/bin/dircolors [32m];[39m(B[m [32mthen[4;5H[39m(B[mtest(B[0;1m[35m -r[39m(B[m ~/.dircolors [32m&&[39m(B[m [32meval[39m(B[m (B[0;1m[33m"$(dircolors -b ~/.dircolors)[39m(B[0;7m>[5;5H(B[malias ls[32m=(B[0;1m[33m'ls --color=auto'[6;4H(B[0m[36m #alias dir=(B[0;1m[33m'dir --color=auto'[7;4H(B[0m[36m #alias vdir=(B[0;1m[33m'vdir --color=auto'[9;5H[39m(B[malias (B[0;1m[34mgrep(B[0m[32m=(B[0;1m[33m'grep --color=auto'[10;5H[39m(B[malias fgrep[32m=(B[0;1m[33m'fgrep --color=auto'[11;5H[39m(B[malias egrep[32m=(B[0;1m[33m'egrep --color=auto'[12d(B[0m[32mfi[2d[39m(B[m[?12l[?25h[?25l[?12l[?25h[56G[?25l[1;51H(B[0;7m*[62G(B[m[?12l[?25h[2;56H[36md[39m(B[m[?25l[?12l[?25h[36me[39m(B[m[?25l[?12l[?25h[36mp[39m(B[m[?25l[?12l[?25h[36ml[39m(B[m[?25l[?12l[?25h(B[0;7m<(B[0m[36mepl[39m[42m     [49m(B[m[K[?25l[15;13H(B[0;7mM-C(B[m Case Sen(B[0;7mM-B(B[m Backward(B[0;7m^P(B[m Older[52GGo To Line[16;2H(B[0;7mC(B[m Cancel   (B[0;7mM-R(B[m Reg.exp.(B[0;7m^R[16;38HN(B[m Newer[K[15;62H[A(B[0;7mSearch:                                                        [14;9H(B[m[?12l[?25h[?25l(B[0;7md(B[m[?12l[?25h[?25l(B[0;7me(B[m[?12l[?25h[?25l(B[0;7mp(B[m[?12l[?25h[?25l(B[0;7ml(B[m[?12l[?25h[?25l(B[0;7mo(B[m[?12l[?25h[?25l[K[15;13H(B[0;7m^O(B[m Write Out(B[0;7m^W(B[m Where Is (B[0;7m^K(B[m Cut  [52GExecute[K[16;2H(B[0;7mX(B[m Exit     (B[0;7m^R(B[m Read File(B[0;7m^\[16;38HU(B[m Paste    (B[0;7m^J(B[m Justify[2dalias pdf[32m=(B[0;1m[33m'xournal'[3d[39m(B[malias xo[32m=(B[0;1m[33m'xdg-open'[39m(B[m[K[4dalias s[32m=(B[0;1m[33m"ssh -p33 cs2000.linkpc.net"[39m(B[m[K[5dalias nx_start[32m=(B[0;1m[33m'sudo /etc/NX/nxserver --start'[6d[39m(B[malias nx_stop[32m=(B[0;1m[33m'sudo /etc/NX/nxserver --stop'[7d[39m(B[m[K[8d[36m# Docker aliases for GeoRAG and sql_web_app [30m[103mdeplo[39;49m[36myments[9d[39m(B[malias docker_deploy[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./depl[39m(B[0;7m>[10;1H(B[malias docker_stop[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./stop.s[39m(B[0;7m>[11;1H(B[m[K[12d[32mexport[39m(B[m GTK_IM_MODULE[32m=[39m(B[mibus[13d[32mexport[39m(B[m XMODIFIERS[32m=[39m(B[m@im[32m=[39m(B[mibus[8;45H[?12l[?25h[36mdeplo[56G[39m(B[m[8;45H[?25l[?12l[?25h[C[?25l[?12l[?25h[C[?25l[?12l[?25h[?25l[?12l[?25h[9d[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[14d[?12l[?25h[9;37H[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[9;14r[14;1H
+[1;16r[13;1H[32mexport[39m(B[m QT_IM_MODULE[32m=[39m(B[mibus[9d[?12l[?25h[?25l7[9;13r8M[1;16r[9;1Halias docker_deploy[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./depl[39m(B[0;7m>[10;1H(B[m[?12l[?25h[?25l[9;13r[9;1HM[1;16r[9;1Halias docker_deploy[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./depl[39m(B[0;7m>[11;1H(B[m[?12l[?25h[?25l[?12l[?25h[A[?25l[?12l[?25h[A[?25l[?12l[?25h[10d[?25l[?12l[?25ha[?25l[?12l[?25hl[?25l[?12l[?25hi[?25l[?12l[?25ha[?25l[?12l[?25hs[?25l[?12l[?25h [?25l[?12l[?25hd[?25l[?12l[?25ho[?25l[?12l[?25hc[?25l[?12l[?25hk[?25l[?12l[?25he[?25l[?12l[?25hr[?25l[?12l[?25h_[?25l[?12l[?25hd[?25l[?12l[?25he[?25l[?12l[?25hp[?25l[?12l[?25hl[?25l[?12l[?25ho[?25l[?12l[?25hy[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deplo[10;19H[39m(B[m[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy[10;18H[39m(B[m[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.[10;17H[39m(B[m[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.s[10;16H[39m(B[m[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.sh[10;15H[39m(B[m[?25l[?12l[?25h[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.sh)[10;14H[39m(B[m[?25l[?12l[?25hs[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.sh[10;15H[39m(B[m[?25l[?12l[?25ht[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.s[10;16H[39m(B[m[?25l[?12l[?25ha[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy.[10;17H[39m(B[m[?25l[?12l[?25hr[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deploy[10;18H[39m(B[m[?25l[?12l[?25ht[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deplo[10;19H[39m(B[m[?25l[?12l[?25h(B[0;7m<(B[0;1m[33m./deploy.sh)'[39m(B[m[K[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25halias docker_start[32m=(B[0;1m[33m'(cd ~/Project/ai/GeoRAG/scripts && ./deplo[39m(B[0;7m>[10;1H(B[m[?25l[14d(B[0;7mSave modified buffer?                                          [15;1H Y(B[m Yes[K[16d(B[0;7m N(B[m No           (B[0;7m^C(B[m Cancel[K[14;23H[?12l[?25h[?25l[15d(B[0;7m^G(B[m Help[15;16H(B[0;7mM-D(B[m DOS Format (B[0;7mM-A(B[m Append     (B[0;7mM-B(B[m Backup File[16d(B[0;7m^C(B[m Cancel[16G(B[0;7mM-M(B[m Mac Format (B[0;7mM-P(B[m Prepend    (B[0;7m^T(B[m Browse[14d(B[0;7mFile Name to Write: /mnt/nvme0n1p1/home/bt/.bashrc(B[m[?12l[?25h[?25l[14;24H[1K (B[0;7m[ Writing... ](B[m[K[1;51H(B[0;7m [62G(B[m[14;23H(B[0;7m[ Wrote 40 lines ](B[m[J[16d[?12l[?25h[16;1H[?1049l[23;0;0t[?1l>[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ nano ~/.bashrc[C[C[C[C[1P ~/.bashrc[1P ~/.bashrc[1P ~/.bashrc[1P ~/.bashrcs ~/.bashrco ~/.bashrcu ~/.bashrcr ~/.bashrcc ~/.bashrce ~/.bashrc
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ dok[Kcker_st
+[?2004ldocker_st: command not found
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_start 
+[?2004l🚀 Starting CI/CD Deployment for ai-vision-rag...
+🛠️ Building Docker image: ai-vision-rag
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  529.7kBSending build context to Docker daemon  1.552MB
+Step 1/8 : FROM python:3.10-slim
+ ---> 988b1bc80158
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> f4e31b7ea5cc
+Step 3/8 : RUN apt-get update && apt-get install -y     build-essential     libopenblas-dev     libomp-dev     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 7cd2250ecd55
+Step 4/8 : COPY requirements.txt .
+ ---> Using cache
+ ---> 11702c08f05c
+Step 5/8 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Using cache
+ ---> d82401a5423a
+Step 6/8 : COPY . .
+ ---> df6ca7d949bc
+Step 7/8 : EXPOSE 5000
+ ---> Running in afe8f81dba79
+ ---> Removed intermediate container afe8f81dba79
+ ---> 847c0dce1d95
+Step 8/8 : CMD ["python", "app.py"]
+ ---> Running in d61acc1d0567
+ ---> Removed intermediate container d61acc1d0567
+ ---> bc0c8aad9e1f
+Successfully built bc0c8aad9e1f
+Successfully tagged ai-vision-rag:latest
+🏃 Starting new container: ai-vision-rag-app on port 5000
+7f87f3947fb665641cc50060154e3529eaae2ce5283db7375d62fe6e6938d96e
+✨ Deployment successful! Access the app at http://localhost:5000
+📊 Run 'bash scripts/log_monitor.sh' to see application logs.
+🚀 Starting CI/CD Deployment for sql-dashboard...
+📦 Preparing database...
+✅ practice.db copied from parent directory.
+🛠️ Building Docker image: sql-dashboard
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+unable to prepare context: unable to evaluate symlinks in Dockerfile path: lstat /mnt/nvme0n1p1/home/bt/aaa2025/cv/uk_jobs/nhs_Research & Development Specialist Data Analyst_23Jan2026/technical_practice/sql_web_app/scripts/Dockerfile: no such file or directory
+🏃 Starting new container: sql-dashboard-app on port 5002
+89c4d191863ac567f0e86b511435715358a455066432e9be89cf328c71c01b2a
+✨ Deployment successful! Access the app at http://localhost:5002
+📊 Run 'docker logs -f sql-dashboard-app' to see application logs.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ docker_start [K[K[K[Kop
+[?2004l🛑 Stopping and removing container: ai-vision-rag-app
+ai-vision-rag-app
+ai-vision-rag-app
+✅ Container stopped and removed.
+🛑 Stopping and removing container: sql-dashboard-app
+sql-dashboard-app
+sql-dashboard-app
+✅ Container stopped and removed.
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ sudo crontab -l
+[?2004l[sudo] password for bt: 
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+
+15 1 * * * /sbin/shutdown -h now
+
+#@monthly /usr/nx_reinstall.bash
+
+@monthly /usr/local/bin/backup_system.sh
+[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ 
+[?2004l[?2004h[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ [K[01;32mbt@itc1[00m:[01;34m~/Project/ai[00m$ sudo crontab -l[4Pdocker_stopart 
+[?2004l🚀 Starting CI/CD Deployment for ai-vision-rag...
+🛠️ Building Docker image: ai-vision-rag
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  529.7kBSending build context to Docker daemon  1.556MB
+Step 1/8 : FROM python:3.10-slim
+ ---> 988b1bc80158
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> f4e31b7ea5cc
+Step 3/8 : RUN apt-get update && apt-get install -y     build-essential     libopenblas-dev     libomp-dev     && rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 7cd2250ecd55
+Step 4/8 : COPY requirements.txt .
+ ---> Using cache
+ ---> 11702c08f05c
+Step 5/8 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Using cache
+ ---> d82401a5423a
+Step 6/8 : COPY . .
+ ---> 341fb3e72bb3
+Step 7/8 : EXPOSE 5000
+ ---> Running in 2035e3c8857a
+ ---> Removed intermediate container 2035e3c8857a
+ ---> 1ab4997807ed
+Step 8/8 : CMD ["python", "app.py"]
+ ---> Running in dc6d2607c22c
+ ---> Removed intermediate container dc6d2607c22c
+ ---> 99d9

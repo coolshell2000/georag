@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoRAG - Scientific Data Explorer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #8a2be2;
+            --accent-blue: #00d2ff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, #1a1a2e, #0a0a0c);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: white;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        #results {
+            display: grid;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .file-name {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--accent-blue);
+        }
+
+        .file-format {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: rgba(138, 43, 226, 0.3);
+            padding: 4px 10px;
+            border-radius: 5px;
+            color: #d1b3ff;
+        }
+
+        .similarity-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: rgba(0, 255, 136, 0.15);
+            color: #00ff88;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .file-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #6a6a7a;
+            margin-bottom: 12px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-blue);
+            /* Default to cold */
+            background: rgba(0, 210, 255, 0.08);
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #6a6a7a;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+        }
+
+        .summarize-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .summarize-btn:hover {
+            color: #ffda44;
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .summary-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-purple);
+            display: none;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .summary-content {
+            font-style: italic;
+            color: #d1b3ff;
+            line-height: 1.5;
+        }
+
+        .loader {
+            text-align: center;
+            display: none;
+            margin: 20px 0;
+        }
+
+        .loader span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .loader span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loader span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+                opacity: 0.5;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent-purple);
+        }
+
+        /* Map */
+        #map-container {
+            height: 600px;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+            border: 1px solid var(--glass-border);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: rgba(20, 20, 25, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .leaflet-popup-tip {
+            background: rgba(20, 20, 25, 0.95);
+        }
+
+        .map-popup h3 {
+            margin: 0 0 5px 0;
+            color: var(--accent-blue);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .map-popup p {
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .map-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .map-btn {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .map-btn:hover {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        /* Branding */
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-purple);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .brand-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Tooltip Container */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Tooltip Content */
+        .tooltip-content {
+            visibility: hidden;
+            width: 220px;
+            background: rgba(20, 20, 25, 0.95);
+            backdrop-filter: blur(15px);
+            color: #fff;
+            text-align: left;
+            border-radius: 12px;
+            padding: 15px;
+            position: absolute;
+            z-index: 1000;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .tooltip-container:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .tooltip-content::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent rgba(138, 43, 226, 0.5) transparent;
+        }
+
+        .tooltip-email {
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .tooltip-links {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 8px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 8px;
+        }
+
+        .tooltip-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+
+        .tooltip-link:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="tooltip-container">
+                <img src="/branding/icon.jpg" alt="GeoRAG Brand" class="brand-icon">
+                <div class="tooltip-content">
+                    <span class="tooltip-email">bt2000@gmail.com</span>
+                    <div class="tooltip-links">
+                        <a href="http://cs2000.linkpc.net:5002" class="tooltip-link"
+                            target="_blank">http://cs2000.linkpc.net:5002</a>
+                        <a href="http://cs2000.linkpc.net:5000" class="tooltip-link"
+                            target="_blank">http://cs2000.linkpc.net:5000</a>
+                    </div>
+                </div>
+            </div>
+            <h1>GeoRAG</h1>
+            <p class="subtitle">Intelligent Scientific Dataset Search & Summarization</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('list')">List View</button>
+            <button class="tab-btn" onclick="switchTab('map')">Map View</button>
+        </div>
+
+        <div id="list-view">
+            <div class="search-box">
+                <input type="text" id="searchInput"
+                    placeholder="Search for datasets (e.g. seismic, temperature, station HGN)..." autofocus>
+            </div>
+
+            <div class="controls">
+                <button onclick="toggleAll('show')">✨ Show All Summaries</button>
+                <button onclick="toggleAll('hide')">Hide All Summaries</button>
+            </div>
+
+            <div class="loader" id="loader">
+                <span></span><span></span><span></span>
+            </div>
+
+            <div id="results">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
+
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+        const loader = document.getElementById('loader');
+
+        let debounceTimer;
+        let downloadStats = {};
+        let statsLoadedPromise = null;
+
+        // Load download stats on page load
+        async function loadStats() {
+            try {
+                const resp = await fetch('/stats', { cache: 'no-store' });
+                downloadStats = await resp.json();
+            } catch (e) {
+                downloadStats = {};
+            }
+        }
+        statsLoadedPromise = loadStats();
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(performSearch, 300);
+        });
+
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            // Ensure stats are loaded
+            if (statsLoadedPromise) await statsLoadedPromise;
+
+            loader.style.display = 'block';
+            try {
+                const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                renderResults(data);
+            } catch (err) {
+                console.error('Search failed:', err);
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        function getHeatColor(count) {
+            // Cold (0) -> Warm (10) -> Hot (20+)
+            if (count < 5) return { color: '#00d2ff', bg: 'rgba(0, 210, 255, 0.1)' }; // Blue
+            if (count < 10) return { color: '#00ff88', bg: 'rgba(0, 255, 136, 0.1)' }; // Green
+            if (count < 15) return { color: '#ffe600', bg: 'rgba(255, 230, 0, 0.1)' }; // Yellow
+            return { color: '#ff4000', bg: 'rgba(255, 64, 0, 0.15)', icon: '🔥' }; // Red
+        }
+
+        function renderResults(results) {
+            console.log("Current downloadStats:", downloadStats);
+            resultsDiv.innerHTML = results.map((res, index) => {
+                const count = downloadStats[res.file] || 0;
+                console.log(`File: ${res.file}, Count: ${count}`);
+                const heat = getHeatColor(count);
+                const countDisplay = heat.icon ? `${heat.icon} ${count}` : count;
+
+                return `
+                <div class="result-card" id="card-${index}">
+                    <div class="card-header">
+                        <div class="file-name">${res.file}</div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <div class="similarity-badge">${res.similarity}% Match</div>
+                            <div class="file-format">${res.metadata.format}</div>
+                        </div>
+                    </div>
+                    <div class="file-path">📁 ${res.path}</div>
+                    <div class="description">${res.description}</div>
+                    <div class="actions">
+                        <span class="download-count" id="dl-count-${index}">⬇ ${countDisplay} downloads</span>
+                        <a class="download-btn" id="dl-btn-${index}" href="/download/${res.file}" 
+                           onclick="trackDownload('${res.file}', ${index})"
+                           style="color: ${heat.color}; border-color: ${heat.color}; background: ${heat.bg}">
+                           ⬇ Download
+                        </a>
+                        <button class="summarize-btn" onclick="getSummary(${index}, '${res.file}', \`${res.description.replace(/`/g, '\\`')}\`)">✨</button>
+                    </div>
+                    <div class="summary-section" id="summary-${index}">
+                        <div class="summary-content" id="content-${index}">Loading summary...</div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function trackDownload(filename, index) {
+            downloadStats[filename] = (downloadStats[filename] || 0) + 1;
+            const count = downloadStats[filename];
+
+            // Update list view
+            const countEl = document.getElementById(`dl-count-${index}`);
+            const btnEl = document.getElementById(`dl-btn-${index}`);
+            const heat = getHeatColor(count);
+
+            if (countEl) countEl.innerHTML = `⬇ ${heat.icon ? heat.icon + ' ' : ''}${count} downloads`;
+            if (btnEl) {
+                btnEl.style.color = heat.color;
+                btnEl.style.borderColor = heat.color;
+                btnEl.style.background = heat.bg;
+            }
+        }
+
+        async function getSummary(index, filename, description) {
+            const section = document.getElementById(`summary-${index}`);
+            const content = document.getElementById(`content-${index}`);
+
+            if (section.style.display === 'block') {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            content.innerText = 'Analyzing with Gemini...';
+
+            try {
+                const response = await fetch('/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ file: filename, description: description })
+                });
+                const data = await response.json();
+                content.innerText = data.summary;
+            } catch (err) {
+                content.innerText = 'Failed to generate summary.';
+            }
+        }
+
+        function toggleAll(action) {
+            const summaries = document.querySelectorAll('.summary-section');
+            const btns = document.querySelectorAll('.summarize-btn');
+
+            summaries.forEach((s, i) => {
+                if (action === 'show' && s.style.display !== 'block') {
+                    btns[i].click();
+                } else if (action === 'hide') {
+                    s.style.display = 'none';
+                }
+            });
+        }
+
+        // Map Logic
+        let map = null;
+        let mapInitialized = false;
+
+        function switchTab(tab) {
+            const listBtn = document.querySelector('.tab-btn:nth-child(1)');
+            const mapBtn = document.querySelector('.tab-btn:nth-child(2)');
+            const listView = document.getElementById('list-view');
+            const mapContainer = document.getElementById('map-container');
+
+            if (tab === 'list') {
+                listBtn.classList.add('active');
+                mapBtn.classList.remove('active');
+                listView.style.display = 'block';
+                mapContainer.style.display = 'none';
+            } else {
+                listBtn.classList.remove('active');
+                mapBtn.classList.add('active');
+                listView.style.display = 'none';
+                mapContainer.style.display = 'block';
+
+                if (!mapInitialized) {
+                    initMap();
+                } else {
+                    map.invalidateSize();
+                }
+            }
+        }
+
+        async function initMap() {
+            map = L.map('map').setView([20, 0], 2);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            mapInitialized = true;
+
+            try {
+                const response = await fetch('/datasets');
+                const datasets = await response.json();
+
+                datasets.forEach(d => {
+                    const loc = d.location;
+                    if (loc && (loc.lat !== 0 || loc.lon !== 0)) {
+                        const marker = L.marker([loc.lat, loc.lon]).addTo(map);
+
+                        const count = downloadStats[d.file] || 0;
+                        const heat = getHeatColor(count);
+
+                        const popupContent = `
+                            <div class="map-popup">
+                                <h3>${d.file}</h3>
+                                <p>${loc.label}</p>
+                                <p style="font-size: 0.75rem">${d.metadata.format}</p>
+                                <div class="map-actions">
+                                    <a href="/download/${d.file}" class="map-btn" target="_blank"
+                                       style="color: ${heat.color}; border-color: ${heat.color}; background: ${heat.bg}"
+                                       onclick="setTimeout(() => { location.reload() }, 1000)">
+                                       ⬇ Download (${count})
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        marker.bindPopup(popupContent);
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to load map datasets:", err);
+            }
+        }
+    </script>
+</body>
+
+</html>

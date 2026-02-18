@@ -1,0 +1,226 @@
+[
+    {
+        "file": "north_sea_reflection_profile.sgy",
+        "path": "data/raw/north_sea_reflection_profile.sgy",
+        "metadata": {
+            "format": "SEG-Y",
+            "file": "north_sea_reflection_profile.sgy",
+            "trace_count": 200,
+            "sample_count": 500,
+            "sample_interval": 1000,
+            "text_header": "C 1 DATE 2026-02-10\nC 2 AN INCREASE IN AMPLITUDE EQUALS AN INCREASE IN ACOUSTIC IMPEDANCE\nC 3 Written by libsegyio (python)\nC 4\nC 5\nC 6\nC 7\nC 8\nC 9\nC10\nC11 TRACE HEADER POSITION:\nC12   INLINE BYTES 189-193    | OFFSET BYTES 037-041\nC13   CROSSLINE BYTES 193-197 |\nC14\nC15 END EBCDIC HEADER\nC16\nC17\nC18\nC19\nC20\nC21\nC22\nC23\nC24\nC25\nC26\nC27\nC28\nC29\nC30\nC31\nC32\nC33\nC34\nC35\nC36\nC37\nC38\nC39\nC40"
+        },
+        "description": "File: north_sea_reflection_profile.sgy (Format: SEG-Y). Contains seismic data with 200 traces and 500 samples per trace. Header Info: C 1 DATE 2026-02-10\nC 2 AN INCREASE IN AMPLITUDE EQUALS AN INCREASE IN ACOUSTIC IMPEDANCE\nC 3 Written by libsegyio (python)\nC 4\nC 5\nC 6\nC 7\nC 8\nC 9\nC10\nC11 TRACE HEADER POSITION:\nC12   INLINE BYTES 189-193    | OFFSET BYTES 037-041\nC13   CROSSLINE BYTES 193-197 |\nC14\nC15 END EBCDIC HEADER\nC16\nC17\nC18\nC19\nC20\nC21\nC22\nC23\nC24\nC25\nC26\nC27\nC28\nC29\nC30\nC31\nC32\nC33\nC34\nC35\nC36\nC37\nC38\nC39\nC40",
+        "location": {
+            "lat": 56.0,
+            "lon": 3.0,
+            "label": "North Sea, Continental Shelf"
+        }
+    },
+    {
+        "file": "bouguer_gravity_survey.h5",
+        "path": "data/raw/bouguer_gravity_survey.h5",
+        "metadata": {
+            "format": "HDF5",
+            "file": "bouguer_gravity_survey.h5",
+            "structure": {
+                "coordinates": "group",
+                "coordinates/easting": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "coordinates/elevation": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "coordinates/northing": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "gravity": "group",
+                "gravity/bouguer_anomaly": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "gravity/free_air_anomaly": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "gravity/observed_gravity": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "quality": "group",
+                "quality/measurement_error": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "float64"
+                },
+                "quality/repeat_readings": {
+                    "shape": [
+                        500
+                    ],
+                    "dtype": "int64"
+                }
+            },
+            "attributes": {
+                "datum": "WGS84",
+                "institution": "Generated for GeoRAG demo (USGS-style)",
+                "survey_date": "2023-06-15",
+                "title": "Bouguer Gravity Anomaly Survey - Basin and Range Province",
+                "units": "mGal"
+            }
+        },
+        "description": "File: bouguer_gravity_survey.h5 (Format: HDF5). Hierarchical scientific data. Datasets include: ['coordinates/easting', 'coordinates/elevation', 'coordinates/northing', 'gravity/bouguer_anomaly', 'gravity/free_air_anomaly', 'gravity/observed_gravity', 'quality/measurement_error', 'quality/repeat_readings']. Metadata Attributes: {'datum': 'WGS84', 'institution': 'Generated for GeoRAG demo (USGS-style)', 'survey_date': '2023-06-15', 'title': 'Bouguer Gravity Anomaly Survey - Basin and Range Province', 'units': 'mGal'}",
+        "location": {
+            "lat": 36.2,
+            "lon": -117.0,
+            "label": "Basin and Range Province, NV"
+        }
+    },
+    {
+        "file": "hawaii_volcanic_POHA_BHZ.mseed",
+        "path": "data/raw/hawaii_volcanic_POHA_BHZ.mseed",
+        "metadata": {
+            "format": "MiniSEED",
+            "file": "hawaii_volcanic_POHA_BHZ.mseed",
+            "stream_info": "1 Trace(s) in Stream:\nIU.POHA.00.BHZ | 2023-01-10T00:00:00.019538Z - 2023-01-10T00:09:59.994538Z | 40.0 Hz, 24000 samples",
+            "traces": [
+                {
+                    "station": "POHA",
+                    "channel": "BHZ",
+                    "starttime": "2023-01-10T00:00:00.019538Z",
+                    "endtime": "2023-01-10T00:09:59.994538Z",
+                    "sampling_rate": 40.0,
+                    "npts": 24000
+                }
+            ]
+        },
+        "description": "File: hawaii_volcanic_POHA_BHZ.mseed (Format: MiniSEED). Seismological time-series data. Includes 1 traces. Sample Station: POHA, Channel: BHZ, Start: 2023-01-10T00:00:00.019538Z, End: 2023-01-10T00:09:59.994538Z.",
+        "location": {
+            "lat": 19.757,
+            "lon": -155.532,
+            "label": "POHA Station, Pohakuloa, HI"
+        }
+    },
+    {
+        "file": "alaska_seismic_COLA_BHZ.mseed",
+        "path": "data/raw/alaska_seismic_COLA_BHZ.mseed",
+        "metadata": {
+            "format": "MiniSEED",
+            "file": "alaska_seismic_COLA_BHZ.mseed",
+            "stream_info": "1 Trace(s) in Stream:\nIU.COLA.00.BHZ | 2023-11-04T03:00:00.019538Z - 2023-11-04T03:14:59.994538Z | 40.0 Hz, 36000 samples",
+            "traces": [
+                {
+                    "station": "COLA",
+                    "channel": "BHZ",
+                    "starttime": "2023-11-04T03:00:00.019538Z",
+                    "endtime": "2023-11-04T03:14:59.994538Z",
+                    "sampling_rate": 40.0,
+                    "npts": 36000
+                }
+            ]
+        },
+        "description": "File: alaska_seismic_COLA_BHZ.mseed (Format: MiniSEED). Seismological time-series data. Includes 1 traces. Sample Station: COLA, Channel: BHZ, Start: 2023-11-04T03:00:00.019538Z, End: 2023-11-04T03:14:59.994538Z.",
+        "location": {
+            "lat": 64.874,
+            "lon": -147.861,
+            "label": "COLA Station, College, AK"
+        }
+    },
+    {
+        "file": "tohoku_earthquake_ANMO_BHZ.mseed",
+        "path": "data/raw/tohoku_earthquake_ANMO_BHZ.mseed",
+        "metadata": {
+            "format": "MiniSEED",
+            "file": "tohoku_earthquake_ANMO_BHZ.mseed",
+            "stream_info": "1 Trace(s) in Stream:\nIU.ANMO.00.BHZ | 2011-03-11T05:46:00.019538Z - 2011-03-11T05:59:59.969538Z | 20.0 Hz, 16800 samples",
+            "traces": [
+                {
+                    "station": "ANMO",
+                    "channel": "BHZ",
+                    "starttime": "2011-03-11T05:46:00.019538Z",
+                    "endtime": "2011-03-11T05:59:59.969538Z",
+                    "sampling_rate": 20.0,
+                    "npts": 16800
+                }
+            ]
+        },
+        "description": "File: tohoku_earthquake_ANMO_BHZ.mseed (Format: MiniSEED). Seismological time-series data. Includes 1 traces. Sample Station: ANMO, Channel: BHZ, Start: 2011-03-11T05:46:00.019538Z, End: 2011-03-11T05:59:59.969538Z.",
+        "location": {
+            "lat": 34.946,
+            "lon": -106.457,
+            "label": "ANMO Station, Albuquerque, NM"
+        }
+    },
+    {
+        "file": "pacific_ocean_sst_2023.nc",
+        "path": "data/raw/pacific_ocean_sst_2023.nc",
+        "metadata": {
+            "format": "NetCDF",
+            "file": "pacific_ocean_sst_2023.nc",
+            "dimensions": {
+                "time": 12,
+                "lat": 30,
+                "lon": 60,
+                "depth": 5
+            },
+            "variables": {
+                "time": [
+                    "time"
+                ],
+                "lat": [
+                    "lat"
+                ],
+                "lon": [
+                    "lon"
+                ],
+                "depth": [
+                    "depth"
+                ],
+                "sst": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "temperature": [
+                    "time",
+                    "depth",
+                    "lat",
+                    "lon"
+                ],
+                "salinity": [
+                    "time",
+                    "lat",
+                    "lon"
+                ]
+            },
+            "attributes": {
+                "title": "Pacific Ocean Sea Surface Temperature Analysis",
+                "institution": "Generated for GeoRAG demo (NOAA OISST-style)",
+                "source": "Optimum Interpolation Sea Surface Temperature (OISST)",
+                "Conventions": "CF-1.6",
+                "history": "Created 2026-02-10T12:21:15.852833 for RAG development"
+            }
+        },
+        "description": "File: pacific_ocean_sst_2023.nc (Format: NetCDF). Multidimensional gridded data. Dimensions: ['time', 'lat', 'lon', 'depth']. Variables: ['time', 'lat', 'lon', 'depth', 'sst', 'temperature', 'salinity']. Global Attributes: {'title': 'Pacific Ocean Sea Surface Temperature Analysis', 'institution': 'Generated for GeoRAG demo (NOAA OISST-style)', 'source': 'Optimum Interpolation Sea Surface Temperature (OISST)', 'Conventions': 'CF-1.6', 'history': 'Created 2026-02-10T12:21:15.852833 for RAG development'}",
+        "location": {
+            "lat": 0.0,
+            "lon": 180.0,
+            "label": "Equatorial Pacific Ocean"
+        }
+    }
+]
